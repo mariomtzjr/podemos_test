@@ -10,10 +10,10 @@ class Cuenta(models.Model):
         ('CERRADA', 'CERRADA'),
     ]
     id = models.CharField(max_length=5, primary_key=True)
-    grupo_id = models.ForeignKey(Grupo, on_delete=models.CASCADE)
+    grupo_id = models.ForeignKey(Grupo, on_delete=models.CASCADE, related_name="grupos")
     estatus = models.CharField(max_length=15, choices=ESTATUS, default='DESEMBOLSADA')
     monto = models.DecimalField(max_digits=15, decimal_places=2)
     saldo = models.DecimalField(max_digits=15, decimal_places=2)
 
     def __str__(self):
-        return self.id
+        return str(self.id)

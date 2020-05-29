@@ -18,3 +18,6 @@ class CalendarioPago(models.Model):
     monto = models.DecimalField(max_digits=15, decimal_places=2)
     fecha_pago = models.DateField()
     estatus = models.CharField(max_length=15, choices=CALENDARIO_CHOICES, default='PENDIENTE')
+
+    def __str__(self):
+        return str(self.id)
