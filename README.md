@@ -9,8 +9,34 @@
 ### Instalación de requerimientos  
 `pip install django==2.2.1`  
 `pip install djandorestframework`  
-`pip install django-import-export` 
+`pip install django-import-export`  
+Para instalar Python, puede realizarse desde su [página oficial](https://www.python.org/downloads/release/python-370/).
 
+### Set up del proyecto
+El proyecto puede levantarse de dos formas, mediante el ambiente virtual para no instalar requerimientos (ya están incluidos en el ambiente virtual) e instalando requerimientos.
+
+##### Proceso para utilizar el ambiente virtual
+Al descargar este repositorio, ingresamos a la carpeta *podemos_test* y debemos situarnos al nivel del archivo *manage.py*. Para levantar el ambiente virtual debemos ejecutar los siguientes comando desde una terminal:
+- Para ambientes Windows: `\app_podemos_venv\Scripts\activate.bat`
+- Para ambientes MacOs y Linux: `/app_podemos_venv/Scripts/activate`
+
+En cualquiera de los dos casos, se deberá obtener una salida en la terminal que muestra el nombre del ambiente:  
+`(app_podemos) C:\Users\mario_martinez\Desktop\django_projects\podemos_progresar\app>`, en este caso en particular, el ambiente creado tiene por nombre **app_podemos**.
+
+Una vez que estamos dentro del ambiente, procedemos a ejecutar el siguiente comando:  
+`python manage.py runserver`  
+El servidor comenzará a levantar y si no hay errores, debemos obtener una salida como la siguiente:  
+```
+System check identified no issues (0 silenced).
+June 01, 2020 - 15:45:23
+Django version 2.2.10, using settings 'app.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+```
+
+El proyecto tiene un archivo llamado *db.sqlite3*, que es el archivo que contiene nuestra base de datos por default en un proyecto django (motor SQLite), por lo tanto, no es necesario ejecutar el comando `python manage.py migrate`, ya que este comando crea las tablas de nuestros modelos y las que django trae por default.  
+
+El sitio de administración se encuentra habilitado en la url *localhost://8000/admin*, existe un super usuario *eval*, con password *password*.
 
 ### Importar/Exportar datos desde el sitio de Administración
 Para importar los datos proporcionados para el proyecto, se utilizó la biblioteca django-import-export:  
