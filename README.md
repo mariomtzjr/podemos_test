@@ -6,6 +6,12 @@
 - Python==3.7
 - djangorestframework
 
+### Instalación de requerimientos  
+`pip install django==2.2.1`  
+`pip install djandorestframework`  
+`pip install django-import-export` 
+
+
 ### Importar/Exportar datos desde el sitio de Administración
 Para importar los datos proporcionados para el proyecto, se utilizó la biblioteca django-import-export:  
 [django-import-export](https://django-import-export.readthedocs.io/en/latest/api_admin.html).
