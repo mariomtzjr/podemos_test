@@ -26,3 +26,4 @@ los datos, en el archivo data_calendariopagos.csv se cambió el formato de fecha
 - /api/miembros/editar/<id_miembro>: Edita el objeto miembro en cuestión. El <id_miembro> debe ser en donde se encuentra el cliente o el grupo que se desea modificar.
 - /api/miembros/eliminar/<id_miembro>: Elimina cliente que se encuentra en un grupo particular.
 - /api/cuentas/listar/: Listado de las cuentas pertenecimientes a un grupo, así como el calendario de pagos ligadas a una cuenta.
+- /api/cuentas/crear/: Crea una cuenta. Automáticamente se genera su calendario de Pagos con los datos (monto) introducidos.

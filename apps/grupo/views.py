@@ -35,3 +35,13 @@ class GrupoDelete(generics.DestroyAPIView):
         serializer = GruposSerializer(grupo)
 
         return Response({'serializer': serializer.data})
+
+    def post(self, request, id):
+        grupo = get_object_or_404(Grupo, pk=id)
+        serializer = GruposSerializer(grupo, data=request.data)
+
+        if not serializer.is_valid():
+            return Response({serializer})
+        grupo.delete()
+
+        return redirect('grupo_listar')

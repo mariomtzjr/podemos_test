@@ -1,6 +1,7 @@
 from django.db import models
 
 from apps.grupo.models import Grupo
+from apps.calendarioPago.models import CalendarioPago
 
 
 # Create your models here.

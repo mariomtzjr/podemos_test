@@ -1,13 +1,18 @@
 import json
+from datetime import datetime, timedelta
 from collections import defaultdict
+
+from django.shortcuts import redirect
 
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework import status
 
 from api.serializers import CuentaSerializer
 from apps.cuenta.models import Cuenta
 from apps.grupo.models import Grupo
 from apps.calendarioPago.models import CalendarioPago
+from apps.transaccion.models import Transaccion
 
 
 # Create your views here.
@@ -35,4 +40,40 @@ class CuentaListar(generics.ListAPIView):
                 calendario = CalendarioPago.objects.filter(cuenta_id=cuenta['id'])
                 cuenta['calendarioPagos'] = calendario.values()
 
+                pagos = Transaccion.objects.filter(cuenta_id=cuenta['id'])
+                cuenta['pagos'] = pagos.values()
+
         return Response(groups)
+
+
+class CuentaCreate(generics.CreateAPIView):
+    serializer_class = CuentaSerializer
+
+    def post(self, request):
+        serializer = CuentaSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            fecha_inicio = datetime.now()
+            num_pagos = 4
+
+            fecha_siguiente = fecha_inicio
+            for pago in range(1, num_pagos + 1, 1):
+                fecha_siguiente += timedelta(days=7)
+
+                if fecha_siguiente.weekday() == 5:
+                    fecha_siguiente += timedelta(days=2)
+                if fecha_siguiente.weekday() == 6:
+                    fecha_siguiente += timedelta(days=1)
+
+                print(pago, fecha_siguiente.weekday())
+                CalendarioPago.objects.create(
+                    cuenta_id=Cuenta.objects.get(id=request.data['id']),
+                    num_pago=pago,
+                    monto=float(request.data['monto']) / num_pagos,
+                    fecha_pago=fecha_siguiente,
+                    estatus='PENDIENTE'
+                )
+            return redirect('cuenta_listar')
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
