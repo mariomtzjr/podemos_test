@@ -7,11 +7,11 @@
 - djangorestframework
 
 ### Instalación de requerimientos  
-Para instalar Python, puede realizarse desde su [página oficial](https://www.python.org/downloads/release/python-370/). Debe de estar instalando Python para poder ejecutar los comandos siguientes.
+Para instalar Python, puede realizarse desde su [página oficial](https://www.python.org/downloads/release/python-370/). Debe de estar instalando Python para poder ejecutar los comandos siguientes.  
 `pip install django==2.2.1`  
 `pip install djandorestframework`  
 `pip install django-import-export`  
-ó
+ó  
 `pip install -r requirements.txt`
 
 Para ejecutar el comando `pip install -r requirements.txt` es necesario estar situado en el directorio que contiene el archivo txt.
