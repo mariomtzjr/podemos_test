@@ -9,19 +9,19 @@
 ### Instalación de requerimientos  
 `pip install django==2.2.1`  
 `pip install djandorestframework`  
-`pip install django-import-export`  
+`pip install django-import-export`    
 Para instalar Python, puede realizarse desde su [página oficial](https://www.python.org/downloads/release/python-370/).
 
 ### Set up del proyecto
-El proyecto puede levantarse de dos formas, mediante el ambiente virtual para no instalar requerimientos (ya están incluidos en el ambiente virtual) e instalando requerimientos.
+El proyecto puede levantarse de dos formas, mediante el ambiente virtual para no instalar requerimientos (ya están incluidos en el mismo) e instalando requerimientos.
 
 ##### Proceso para utilizar el ambiente virtual
-Al descargar este repositorio, ingresamos a la carpeta *podemos_test* y debemos situarnos al nivel del archivo *manage.py*. Para levantar el ambiente virtual debemos ejecutar los siguientes comando desde una terminal:
+Al descargar este repositorio, ingresamos a la carpeta *podemos_test* y debemos situarnos al nivel del archivo *manage.py*. Para levantar el ambiente virtual debemos ejecutar los siguientes comandos desde una terminal:
 - Para ambientes Windows: `\app_podemos_venv\Scripts\activate.bat`
 - Para ambientes MacOs y Linux: `/app_podemos_venv/Scripts/activate`
 
 En cualquiera de los dos casos, se deberá obtener una salida en la terminal que muestra el nombre del ambiente:  
-`(app_podemos) C:\Users\mario_martinez\Desktop\django_projects\podemos_progresar\app>`, en este caso en particular, el ambiente creado tiene por nombre **app_podemos**.
+`(app_podemos) C:\Users\mario_martinez\Desktop\django_projects\podemos_progresar\app>`, en este caso en particular, el ambiente creado tiene por nombre **app_podemos**. La ruta posterior al nombre del ambiente es de un sistema operativo Windows.
 
 Una vez que estamos dentro del ambiente, procedemos a ejecutar el siguiente comando:  
 `python manage.py runserver`  
@@ -37,6 +37,19 @@ Quit the server with CTRL-BREAK.
 El proyecto tiene un archivo llamado *db.sqlite3*, que es el archivo que contiene nuestra base de datos por default en un proyecto django (motor SQLite), por lo tanto, no es necesario ejecutar el comando `python manage.py migrate`, ya que este comando crea las tablas de nuestros modelos y las que django trae por default.  
 
 El sitio de administración se encuentra habilitado en la url *localhost://8000/admin*, existe un super usuario *eval*, con password *password*.
+
+##### Proceso para utilizar el proyecto sin ambiente virtual
+El primer paso que se debe realizar es instalar las bibliotecas necesarias, los comandos están indicandos en el apartado *Instalación de requerimientos*. Para podemos utilizar **Django Rest Framework (DRF)** y django-import-export, se debe de realizar una configuración en el archivo *settings.py*, el cual se encuentra dentro del directorio *app*. Se deberá añadir la aplicación de *DRF* y *django-import-export* a la lista de aplicaciones instaladas de la siguiente manera:  
+```
+INSTALLED_APPS = [
+    .
+    .
+    .
+    'django.contrib.staticfiles',
+    'import_export',
+    'rest_framework',
+]
+```
 
 ### Importar/Exportar datos desde el sitio de Administración
 Para importar los datos proporcionados para el proyecto, se utilizó la biblioteca django-import-export:  
