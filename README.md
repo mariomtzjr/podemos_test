@@ -1,7 +1,7 @@
 # PODEMOS POGRESAR TEST
 
 ## Requerimientos
-- Django==2.2.1
+- Django==2.2.10
 - django-import-export
 - Python==3.7
 - djangorestframework
