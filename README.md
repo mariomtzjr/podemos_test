@@ -27,3 +27,9 @@ los datos, en el archivo data_calendariopagos.csv se cambió el formato de fecha
 - /api/miembros/eliminar/<id_miembro>: Elimina cliente que se encuentra en un grupo particular.
 - /api/cuentas/listar/: Listado de las cuentas pertenecimientes a un grupo, así como el calendario de pagos ligadas a una cuenta.
 - /api/cuentas/crear/: Crea una cuenta. Automáticamente se genera su calendario de Pagos con los datos (monto) introducidos.
+- /api/transacciones/crear/: Crear una transacción (realizar pago a una cuenta).
+
+### Validaciones adicionales
+- Al crear el calendario de pagos se valida que el día de pago sea únicamente día hábil.
+- Cuando una transacción se crea de manera correcta se actualiza el saldo de la cuenta. NOTA: No se especifica validación de num_pago para cada pago realizado a una cuenta, por lo que el sistema únicamente ve el pago 1. Tampoco se especifica la validación para num_pago con respecto a fecha_pago.
+- Si el monto de una transacción es mayor al pago que debe ser, la transacción se rechaza.
