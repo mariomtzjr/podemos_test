@@ -7,7 +7,7 @@
 - djangorestframework
 
 ### Importar/Exportar datos desde el sitio de Administración
-[django-import-export](https://django-import-export.readthedocs.io/en/latest/).
+[django-import-export](https://django-import-export.readthedocs.io/en/latest/api_admin.html).
 
 ##### Error al importar archivo data_calendariopagos.csv
 - Error: "Enter a date/time date correct value".
