@@ -128,6 +128,178 @@ url: `localhost:8000/api/miembros/eliminar/<id_miembro>`
 Para esta funcionalidad, el valor de *<id_miembro>* tiene el mismo concepto que en *Editar grupos*. Por ejemplo, si quisiéramos que el cliente **NMZXC11** ya no formara parte de ningún grupo, incluyendo al que pertenece actualmente, la url para hacerlo sería `localhost:8000/api/miembros/eliminar/11`.
 Para eliminar a dicho cliente podemos presionar directamente el botón de color rojo **DELETE** y confirmamos la eliminación del cliente en ese grupo, o presionamos el botón **POST** y seleccionamos en el campo **Grupo Id** el valor de **XYZW1** y en el campo **Cliente Id** el valor de **NMZXC11**, y presionar el botón **POST**. En ambos casos, la salida de información será el listado de miembros, en donde podemos ver que el id más grande es 10, ya que el 11 correspondía al cliente **NMZXC11** que se encontraba en el grupo **XYZW1**.
 
+#### Listar cuentas
+url: `localhost:8000/api/cuentas/listar/`  
+La url anterior nos permite saber las cuentas que están asignadas a cada grupo, así como el calendario de pagos y los pagos realizados a dicha cuenta. Por ejemplo, el siguiente extracto de código, nos permite observar lo siguiente:
+```
+"grupos": [
+        {
+            **"grupo_id": "XYZW1"**,
+            "cuentas": [
+                {
+                    **"id": "23001"**,
+                    "grupo_id_id": "XYZW1",
+                    "estatus": "CERRADA",
+                    "monto": 60000.0,
+                    "saldo": 0.0,
+                    **"calendarioPagos"**: [
+                        {
+                            "id": 1,
+                            "cuenta_id_id": "23001",
+                            "num_pago": 1,
+                            "monto": 15000.0,
+                            "fecha_pago": "2018-11-30",
+                            "estatus": "PAGADO"
+                        },
+                        {
+                            "id": 2,
+                            "cuenta_id_id": "23001",
+                            "num_pago": 2,
+                            "monto": 15000.0,
+                            "fecha_pago": "2018-12-07",
+                            "estatus": "PAGADO"
+                        },
+                        {
+                            "id": 3,
+                            "cuenta_id_id": "23001",
+                            "num_pago": 3,
+                            "monto": 15000.0,
+                            "fecha_pago": "2018-12-14",
+                            "estatus": "PAGADO"
+                        },
+                        {
+                            "id": 4,
+                            "cuenta_id_id": "23001",
+                            "num_pago": 4,
+                            "monto": 15000.0,
+                            "fecha_pago": "2018-12-21",
+                            "estatus": "PAGADO"
+                        }
+                    ],
+                    **"pagos"**: [
+                        {
+                            "id": 1,
+                            "cuenta_id_id": "23001",
+                            "fecha": "2018-11-30T10:36:00Z",
+                            "monto": 15000.0
+                        },
+                        {
+                            "id": 2,
+                            "cuenta_id_id": "23001",
+                            "fecha": "2018-12-07T12:50:00Z",
+                            "monto": 15000.0
+                        },
+                        {
+                            "id": 3,
+                            "cuenta_id_id": "23001",
+                            "fecha": "2018-12-14T13:45:00Z",
+                            "monto": 15000.0
+                        },
+                        {
+                            "id": 4,
+                            "cuenta_id_id": "23001",
+                            "fecha": "2018-12-21T11:35:00Z",
+                            "monto": 15000.0
+                        }
+                    ]
+                },
+                {
+                    **"id"**: "10001",
+                    "grupo_id_id": "XYZW1",
+                    "estatus": "DESEMBOLSADA",
+                    "monto": 150000.0,
+                    "saldo": 74500.0,
+                    **"calendarioPagos"**: [
+                        {
+                            "id": 9,
+                            "cuenta_id_id": "10001",
+                            "num_pago": 1,
+                            "monto": 37500.0,
+                            "fecha_pago": "2018-12-07",
+                            "estatus": "PAGADO"
+                        },
+                        {
+                            "id": 10,
+                            "cuenta_id_id": "10001",
+                            "num_pago": 2,
+                            "monto": 37500.0,
+                            "fecha_pago": "2018-12-14",
+                            "estatus": "PAGADO"
+                        },
+                        {
+                            "id": 11,
+                            "cuenta_id_id": "10001",
+                            "num_pago": 3,
+                            "monto": 37500.0,
+                            "fecha_pago": "2018-12-21",
+                            "estatus": "PARCIAL"
+                        },
+                        {
+                            "id": 12,
+                            "cuenta_id_id": "10001",
+                            "num_pago": 4,
+                            "monto": 37500.0,
+                            "fecha_pago": "2018-12-28",
+                            "estatus": "PENDIENTE"
+                        }
+                    ],
+                    **"pagos"**: [
+                        {
+                            "id": 7,
+                            "cuenta_id_id": "10001",
+                            "fecha": "2018-12-07T11:34:00Z",
+                            "monto": 37500.0
+                        },
+                        {
+                            "id": 8,
+                            "cuenta_id_id": "10001",
+                            "fecha": "2018-12-07T10:04:00Z",
+                            "monto": 37500.0
+                        },
+                        {
+                            "id": 9,
+                            "cuenta_id_id": "10001",
+                            "fecha": "2018-12-07T18:50:00Z",
+                            "monto": -30000.0
+                        },
+                        {
+                            "id": 10,
+                            "cuenta_id_id": "10001",
+                            "fecha": "2018-12-07T18:51:00Z",
+                            "monto": -7500.0
+                        },
+                        {
+                            "id": 11,
+                            "cuenta_id_id": "10001",
+                            "fecha": "2018-12-14T09:59:00Z",
+                            "monto": 37500.0
+                        },
+                        {
+                            "id": 12,
+                            "cuenta_id_id": "10001",
+                            "fecha": "2018-12-21T11:05:00Z",
+                            "monto": 500.0
+                        }
+                    ]
+                }
+            ]
+        }
+```
+El grupo **XYZW1** tiene asociadas dos cuentas, la cuenta con *id* **23001**, y la cuenta con *id* **10001**. Cada cuenta tiene su calendario de pagos **calendarioPagos**, en el cual se determinan los pagos a realizar y las fechas para realizarlo. Por ejemplo, para la cuenta **23001**, su calendario de pagos va desde **2018-11-30 hasta 2018-12-21** y tienen un estatus de **PAGADO**, lo que significa que la cuenta ya está saldada. El campo **pagos**, nos muentra cada pago realizado a la cuenta **23001**, así como la fecha en la que se efectuó dicho pago.  
+Por otro lado, la cuenta **10001**, en su calendario de pagos, presenta, para sus dos primeros pagos un estatus de **PAGADO**, pero para su tercer pago, tiene un estatus de **PARCIAL**, lo que significa el monto del pago realizado fue menor al que indica el campo *monto*.
+
+#### Crear cuenta
+url: `localhost:8000/api/cuentas/crear`  
+Para crear una cuenta debemos proporcionar los siguientes datos:  
+**Id**, que corresponde al id de nuestra cuenta, ésta debe de ser numérica y con una longitud máxima de 5 caracteres. El **Grupo Id**, que será el grupo al cual estará asociada la cuenta que vamos a crear. El **Estatus**, por default se asigna con el valor de *DESEMBOLSADA*, el cual es el valor inicial. El **Monto** que es el monto a desembolsar en la cuenta y el **Saldo** que inicialmente es el mismo valor del **Monto**.  
+Cuando se crea una cuenta, automáticamente se genera su calendario de pagos.
+
+#### Realizar un pago
+url: `localhost:8000/api/transacciones/crear/`
+
+Para realizar un pago debemos proporcionar los siguientes datos:  
+**Id**, que corresponde al identificador de la transacción, éste debe ser numérico y con una longitud máxima de 6 caracteres. La **Cuenta Id** que corresponde al valor de la cuenta a la que se va a abonar. La **Fecha** que corresponde al día en que se efectua el pago y el **Monto** que es el valor del pago, éste no puede ser mayor al *monto* que se indica en el calendario de Pagos que se establece al generar una cuenta.
+
 
 ### Validaciones adicionales
 - Al crear el calendario de pagos se valida que el día de pago sea únicamente día hábil.
