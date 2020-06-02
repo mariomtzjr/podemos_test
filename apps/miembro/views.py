@@ -65,3 +65,8 @@ class MiembroDelete(generics.DestroyAPIView):
             return Response({serializer})
         miembro.delete()
         return redirect('miembros_listar')
+    
+    def delete(self, request, id):
+        miembro = get_object_or_404(Miembro, pk=id)
+        miembro.delete()
+        return redirect('miembros_listar')
