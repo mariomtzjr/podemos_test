@@ -61,244 +61,49 @@ los datos, en el archivo data_calendariopagos.csv se cambió el formato de fecha
 Para hacer uso del sistema, cada endpoint, representa la url que nos lleva a dicha funcionalidad. Por ejemplo para ser el listado de todos los clientes, basta con colocar en la url de un navegador el siguiente valor:
 
 #### Listar clientes
-url: `localhost:8000/api/clientes/listar/`
+url: `localhost:8000/api/clientes/listar/`  
+También podemos seleccionar de nuestro menú de navegación la pestaña **Clientes** desde cualquier otra url y posteriormente **Listar**. Obtendremos una tabla con el listado de todos los clientes registrados.
 
-#### Editar un cliente existente
-url: `localhost:8000/api/clientes/editar/<id_cliente>`  
-El id de cliente puede obtenerse a través de la funcionalidad *Listar clientes* con el campo **id**.
+#### Editar un cliente existente  
+Para editar un cliente, sólo basta con dar click en el enlace **Editar** de la columna *Acciones* sobre la fila en donde se encuentra el nombre del cliente a editar. En la vista posterior se deberá modificar la información pertinente, al finalizar se deberá presionar el botón *Guardar*. Si por equivocación se presiona el enlace **Editar**, basta con presionar el botón *Cancelar* para regresar al listado de clientes.
 
 #### Listar grupos
-url: `localhost:8000/api/grupos/listar/`
+url: `localhost:8000/api/grupos/listar/`  
+También podemos seleccionar de nuestro menú de navegación la pestaña **Grupos** desde cualquier otra url y posteriormente **Listar**. Se mostrará una tabla en la que se describe el *Id del Grupo*, el *Nombre del Grupo*, los *Clientes o miembros* del grupo y las acciones para dicho grupo. 
 
 #### Eliminar un grupo
 url: `localhost:8000/api/grupos/eliminar/<id_grupo>`  
 El id de grupo puede obtenerse a través de la funcionalidad *Listar grupos*, con el campo **id**.
+También podemos presionar el símbolo de *"Bote de basura"* para eliminar un grupo deseado. La siguiente vista es la de confirmación de eliminación, para eliminarlo, presionar el botón *Sí, eliminar*.
 
 #### Añadir un cliente a un grupo existente
 url: `localhost:8000/api/miembros/crear/`  
-El campo **Grupo Id** será el grupo al que queramos integrar el cliente con valor en el campo **Cliente Id**. Una vez establecidos estos dos valores, presionar el botón **POST**.
+También podemos seleccionar de nuestro menú de navegación la pestaña **Grupos** y posteriormente **Crear**. En la siguiente vista será necesario proporcionar un identificador para el nuevo grupo *Id* y el nombre que tendrá dicho grupo *Nombre*. Para crearlo, presionamos el botón *Crear*. Si desea cancelar la operación, presionamos el botón *Cancelar* para regresar al listado de grupos.
 
 #### Listar miembros
 url: `localhost:8000/api/miembros/listar/`  
-La información obtenida para esta url es como la siguiente:  
-```
-{
-        "id": 1,
-        "grupo_id": "XYZW1",
-        "cliente_id": "MNOPQ01"
-},
-{
-        "id": 11,
-        "grupo_id": "GHIJK",
-        "cliente_id": "NMZXC11"
- }
-```
-El valor del campo **id** corresponde al id del registro de la tabla miembro. Este *id* nos será útil cuando queramos reasignar un cliente a un grupo diferente del que pertenece. Esta salida de información nos dice que el cliente **MNOPQ01** pertenece al grupo **XYZW1** y que el cliente **NMZXC11** pertenece al grupo **GHIJK**.
+También podemos obtener el listado de nuestros miembros a través de la pestaña del menú de navegación **Miembros**, seleccionando la opción **Listar**. Se mostrará una tabla con el *Id del miembro*, el *Id del Grupo* al que pertenece un *Cliente* en particular.
 
 #### Editar grupos
 url: `localhost:8000/api/miembros/editar/<id_miembro>`  
-El valor de *<id_miembro>* es un valor que podemos obtener con la url de *Listar miembros*. Suponiendo que ahora el cliente **NMZXC11** ya no estará en el grupo **GHIJK** y ahora formará parte del grupo **XYZW1**, el valor *<id_miembro>* que debemos colocar en la URL para reasignarlo de grupo es el **id=11**, por lo tanto, la url quedaría de la siguiente manera `localhost:8000/api/miembros/editar/11`.  
-La salida que obtendremos es la siguiente: 
-```
-{
-    "serializer": {
-        "id": 11,
-        "grupo_id": "GHIJK",
-        "cliente_id": "NMZXC11"
-    }
-}
-```
-Para reasignar al cliente **NMZXC11** al grupo **XYZW1**, lo primero que debemos hacer seleccionar en el campo **Cliente Id** el valor del cliente, el cual sería **NMZXC11**, y el valor del campo **Grupo Id** debe de ser al grupo al cual queremos cambiarlo, en este caso sería **Grupo Id = XYZW1**. Al finalizar, presionamos el botón **POST**.
+Para editar un grupo, es decir, reasignar un cliente a un grupo diferente, podemos partir de la tabla que muestra la funcionalidad **Listar miembros**. En la columna *Acciones*, presionamos la figura de un cuadrado con un lapiz, en la fila del grupo o del cliente que queremos editar. La siguiente vista muestra qué cliente se encuentrá en qué grupo. Si se desea reasignar el cliente seleccionado, entonces en la lista de opciones del campo *Grupo Id*, seleccionamos el id del grupo al que deseamos cambiar el cliente seleccionado.
 
-Automaticamente, después de presionar el botón **POST**, la información que veremos es el resultado de haber colocado en la url del navegador lo siguiente `localhost:8000/api/miembros/listar`. Si volvemos a observar el id del miembro 11, podemos observar que nuestro clinete **NMZXC11**, ahora forma parte del grupo **XYZW1**, al igual que el cliente **MNOPQ1**.
-```
-{
-        "id": 1,
-        "grupo_id": "XYZW1",
-        "cliente_id": "MNOPQ01"
-},
-{
-        "id": 11,
-        "grupo_id": "XYZW1",
-        "cliente_id": "NMZXC11"
-}
-```
 #### Eliminar un cliente de un grupo en particular
 url: `localhost:8000/api/miembros/eliminar/<id_miembro>`  
-Para esta funcionalidad, el valor de *<id_miembro>* tiene el mismo concepto que en *Editar grupos*. Por ejemplo, si quisiéramos que el cliente **NMZXC11** ya no formara parte de ningún grupo, incluyendo al que pertenece actualmente, la url para hacerlo sería `localhost:8000/api/miembros/eliminar/11`.
-Para eliminar a dicho cliente podemos presionar directamente el botón de color rojo **DELETE** y confirmamos la eliminación del cliente en ese grupo, o presionamos el botón **POST** y seleccionamos en el campo **Grupo Id** el valor de **XYZW1** y en el campo **Cliente Id** el valor de **NMZXC11**, y presionar el botón **POST**. En ambos casos, la salida de información será el listado de miembros, en donde podemos ver que el id más grande es 10, ya que el 11 correspondía al cliente **NMZXC11** que se encontraba en el grupo **XYZW1**.
+Para eliminar un cliente de un grupo en particular, de nuestra tabla de **Miembros**, en la columna *Acciones*, presionamos el símbolo del "bote de basura" para eliminar un cliente de un grupo. La siguiente vista solicitará la confirmación de la eliminación, para eliminarlo, presionamos el botón *Sí, eliminar*. Si deseamos cancelar la operación, presionamos el botón *Cancelar*, para regresar al listado de miembros.
 
 #### Listar cuentas
 url: `localhost:8000/api/cuentas/listar/`  
-La url anterior nos permite saber las cuentas que están asignadas a cada grupo, así como el calendario de pagos y los pagos realizados a dicha cuenta. Por ejemplo, el siguiente extracto de código, nos permite observar lo siguiente:
-```
-"grupos": [
-        {
-            **"grupo_id": "XYZW1"**,
-            "cuentas": [
-                {
-                    **"id": "23001"**,
-                    "grupo_id_id": "XYZW1",
-                    "estatus": "CERRADA",
-                    "monto": 60000.0,
-                    "saldo": 0.0,
-                    **"calendarioPagos"**: [
-                        {
-                            "id": 1,
-                            "cuenta_id_id": "23001",
-                            "num_pago": 1,
-                            "monto": 15000.0,
-                            "fecha_pago": "2018-11-30",
-                            "estatus": "PAGADO"
-                        },
-                        {
-                            "id": 2,
-                            "cuenta_id_id": "23001",
-                            "num_pago": 2,
-                            "monto": 15000.0,
-                            "fecha_pago": "2018-12-07",
-                            "estatus": "PAGADO"
-                        },
-                        {
-                            "id": 3,
-                            "cuenta_id_id": "23001",
-                            "num_pago": 3,
-                            "monto": 15000.0,
-                            "fecha_pago": "2018-12-14",
-                            "estatus": "PAGADO"
-                        },
-                        {
-                            "id": 4,
-                            "cuenta_id_id": "23001",
-                            "num_pago": 4,
-                            "monto": 15000.0,
-                            "fecha_pago": "2018-12-21",
-                            "estatus": "PAGADO"
-                        }
-                    ],
-                    **"pagos"**: [
-                        {
-                            "id": 1,
-                            "cuenta_id_id": "23001",
-                            "fecha": "2018-11-30T10:36:00Z",
-                            "monto": 15000.0
-                        },
-                        {
-                            "id": 2,
-                            "cuenta_id_id": "23001",
-                            "fecha": "2018-12-07T12:50:00Z",
-                            "monto": 15000.0
-                        },
-                        {
-                            "id": 3,
-                            "cuenta_id_id": "23001",
-                            "fecha": "2018-12-14T13:45:00Z",
-                            "monto": 15000.0
-                        },
-                        {
-                            "id": 4,
-                            "cuenta_id_id": "23001",
-                            "fecha": "2018-12-21T11:35:00Z",
-                            "monto": 15000.0
-                        }
-                    ]
-                },
-                {
-                    **"id"**: "10001",
-                    "grupo_id_id": "XYZW1",
-                    "estatus": "DESEMBOLSADA",
-                    "monto": 150000.0,
-                    "saldo": 74500.0,
-                    **"calendarioPagos"**: [
-                        {
-                            "id": 9,
-                            "cuenta_id_id": "10001",
-                            "num_pago": 1,
-                            "monto": 37500.0,
-                            "fecha_pago": "2018-12-07",
-                            "estatus": "PAGADO"
-                        },
-                        {
-                            "id": 10,
-                            "cuenta_id_id": "10001",
-                            "num_pago": 2,
-                            "monto": 37500.0,
-                            "fecha_pago": "2018-12-14",
-                            "estatus": "PAGADO"
-                        },
-                        {
-                            "id": 11,
-                            "cuenta_id_id": "10001",
-                            "num_pago": 3,
-                            "monto": 37500.0,
-                            "fecha_pago": "2018-12-21",
-                            "estatus": "PARCIAL"
-                        },
-                        {
-                            "id": 12,
-                            "cuenta_id_id": "10001",
-                            "num_pago": 4,
-                            "monto": 37500.0,
-                            "fecha_pago": "2018-12-28",
-                            "estatus": "PENDIENTE"
-                        }
-                    ],
-                    **"pagos"**: [
-                        {
-                            "id": 7,
-                            "cuenta_id_id": "10001",
-                            "fecha": "2018-12-07T11:34:00Z",
-                            "monto": 37500.0
-                        },
-                        {
-                            "id": 8,
-                            "cuenta_id_id": "10001",
-                            "fecha": "2018-12-07T10:04:00Z",
-                            "monto": 37500.0
-                        },
-                        {
-                            "id": 9,
-                            "cuenta_id_id": "10001",
-                            "fecha": "2018-12-07T18:50:00Z",
-                            "monto": -30000.0
-                        },
-                        {
-                            "id": 10,
-                            "cuenta_id_id": "10001",
-                            "fecha": "2018-12-07T18:51:00Z",
-                            "monto": -7500.0
-                        },
-                        {
-                            "id": 11,
-                            "cuenta_id_id": "10001",
-                            "fecha": "2018-12-14T09:59:00Z",
-                            "monto": 37500.0
-                        },
-                        {
-                            "id": 12,
-                            "cuenta_id_id": "10001",
-                            "fecha": "2018-12-21T11:05:00Z",
-                            "monto": 500.0
-                        }
-                    ]
-                }
-            ]
-        }
-```
-El grupo **XYZW1** tiene asociadas dos cuentas, la cuenta con *id* **23001**, y la cuenta con *id* **10001**. Cada cuenta tiene su calendario de pagos **calendarioPagos**, en el cual se determinan los pagos a realizar y las fechas para realizarlo. Por ejemplo, para la cuenta **23001**, su calendario de pagos va desde **2018-11-30 hasta 2018-12-21** y tienen un estatus de **PAGADO**, lo que significa que la cuenta ya está saldada. El campo **pagos**, nos muentra cada pago realizado a la cuenta **23001**, así como la fecha en la que se efectuó dicho pago.  
-Por otro lado, la cuenta **10001**, en su calendario de pagos, presenta, para sus dos primeros pagos un estatus de **PAGADO**, pero para su tercer pago, tiene un estatus de **PARCIAL**, lo que significa el monto del pago realizado fue menor al que indica el campo *monto*.
+La url anterior nos permite saber las cuentas que están asignadas a cada grupo, así como el calendario de pagos y los pagos realizados a dicha cuenta. También podemos llegar a esa url desde la prestaña **Cuentas** del menú de navegación y seleccionando **Listar**. La vista que se mostrará es una tabla que muestra las cuentas asociadas a cada grupo. Si deseamos ver el calendario de pagos de una cuenta en particular, presionamos el enlace *Calendario de Pagos*, el cual desplegará una especie de *acordeón* con una subtabla, en la que podemos visualizar el *No. de pago*, la *Fecha de pago*, el *Monto a pagar* y el *Estatus*. De igual manera, si deseamos consultar los pagos realizados a una cuenta en particular, presionamos el enlace *Pagos realizados* para que podamos observar la subtabla con los detalles de cada pago, en este caso se presenta la *Fecha de pago* y el *Monto* pagado.
+
 
 #### Crear cuenta
 url: `localhost:8000/api/cuentas/crear`  
-Para crear una cuenta debemos proporcionar los siguientes datos:  
-**Id**, que corresponde al id de nuestra cuenta, ésta debe de ser numérica y con una longitud máxima de 5 caracteres. El **Grupo Id**, que será el grupo al cual estará asociada la cuenta que vamos a crear. El **Estatus**, por default se asigna con el valor de *DESEMBOLSADA*, el cual es el valor inicial. El **Monto** que es el monto a desembolsar en la cuenta y el **Saldo** que inicialmente es el mismo valor del **Monto**.  
-Cuando se crea una cuenta, automáticamente se genera su calendario de pagos.
+Para crear una cuenta, de la pestaña **Cuentas** del menú de navegación, seleccionamos **Crear**. En la siguiente vista deberá proporcionar el identificador de la cuenta *Id*, seleccionar el grupo al que estará asociada la cuenta *Id de Grupo*, especificar el monto y saldo de la cuenta *Monto*. El estatus automáticamente se selecciona en *DESEMBOLSADA*, puesto que es el estado inicial de la cuenta. Para crear la cuenta, presionamos el botón *Crear*. Si se desea cancelar la operación, presionamos el botón *Cancelar* y volveremos al listado de cuentas. Al crear una cuenta, automáticamente se crea su *Calendario de Pagos*.
 
 #### Realizar un pago
 url: `localhost:8000/api/transacciones/crear/`
-
-Para realizar un pago debemos proporcionar los siguientes datos:  
-**Id**, que corresponde al identificador de la transacción, éste debe ser numérico y con una longitud máxima de 6 caracteres. La **Cuenta Id** que corresponde al valor de la cuenta a la que se va a abonar. La **Fecha** que corresponde al día en que se efectua el pago y el **Monto** que es el valor del pago, éste no puede ser mayor al *monto* que se indica en el calendario de Pagos que se establece al generar una cuenta.
+Para realizar un pago, desde cualquier url, en la pestaña **Transacciones** del menú de navegación, seleccionamos **Crear**. En la siguiente vista se deberá proporcionar un identificador para la transacción (numérico con una longitud máxima de 6 caracteres), la cuenta a la que se va a realizar el pago *Cuenta*, la fecha en la que se realiza la transacción (presionar símbolo de calendario y seleccionar "Hoy") para llenar de manera rápida el formato de fecha y hora, y finalmente, el monto de la transacción *Monto*. Para realziar el pago presionamos el botón *Crear*. Si se desea cancelar la operación, presionamos el botón *Cancelar*.
 
 
 ### Validaciones adicionales
