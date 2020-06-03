@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+	<form action="{% url 'grupo_eliminar' grupo %}" method="post">
+		{% csrf_token %}
+		<div class="confirm-delete">
+			<h1 class="text-center">Eliminar registro</h1>
+			<div>
+				<h4 class="m-t-2">¿Deseas eliminar el registro del grupo {{grupo.id}}?</h4>
+			</div>
+
+			<div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10 save-inmueble">
+                    <a href="{% url 'grupo_listar' %}" class="btn btn-danger btn-lg">Cancelar</a>
+		            <button type="submit" class="btn btn-primary btn-lg">Sí, eliminar</button>
+		        </div>
+		    </div>
+
+		</div>
+	</form>
+{% endblock %}

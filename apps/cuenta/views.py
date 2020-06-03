@@ -1,12 +1,12 @@
 import json
 from datetime import datetime, timedelta
 from collections import defaultdict
-
 from django.shortcuts import redirect
 
 from rest_framework import generics
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer
 
 from api.serializers import CuentaSerializer
 from apps.cuenta.models import Cuenta
@@ -18,7 +18,8 @@ from apps.transaccion.models import Transaccion
 # Create your views here.
 class CuentaListar(generics.ListAPIView):
     serializer_class = CuentaSerializer
-    queryset = Cuenta.objects.all()
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'cuenta/cuenta_listar.html'
 
     def get(self, request, *args, **kwargs):
         grupos = Grupo.objects.all()
@@ -43,11 +44,20 @@ class CuentaListar(generics.ListAPIView):
                 pagos = Transaccion.objects.filter(cuenta_id=cuenta['id'])
                 cuenta['pagos'] = pagos.values()
 
-        return Response(groups)
+        return Response({'groups': groups})
 
 
 class CuentaCreate(generics.CreateAPIView):
     serializer_class = CuentaSerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'cuenta/cuenta_crear.html'
+
+    def get(self, request):
+        queryset = Cuenta.objects.all()
+        serializer = CuentaSerializer(queryset, many=True)
+        grupos = Grupo.objects.all()
+
+        return Response({'serializer': serializer.data, 'grupos': grupos})
 
     def post(self, request):
         serializer = CuentaSerializer(data=request.data)
@@ -66,7 +76,6 @@ class CuentaCreate(generics.CreateAPIView):
                 if fecha_siguiente.weekday() == 6:
                     fecha_siguiente += timedelta(days=1)
 
-                print(pago, fecha_siguiente.weekday())
                 CalendarioPago.objects.create(
                     cuenta_id=Cuenta.objects.get(id=request.data['id']),
                     num_pago=pago,

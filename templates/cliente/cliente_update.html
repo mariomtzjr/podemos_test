@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+<div class="form-editar d-flex flex-column align-items-center">
+    <div class="clientes-title mt-3 mb-3">
+        <h1>Editar registro de cliente</h1>
+    </div>
+	<form action="{% url 'cliente_editar' cliente.id %}" method="POST" class="w-50">
+	    {% csrf_token %}
+	    {% render_form serializer %}
+		<div class="form-group">
+	        <div class="d-flex justify-content-end ">
+                <a href="{% url 'cliente_listar' %}" class="btn btn-danger btn-lg">Cancelar</a>
+	            <button type="submit" class="btn btn-primary btn-lg ml-3">Guardar</button>
+	        </div>
+	    </div>
+	</form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+
+{%  block content %}
+    <div class="clientes d-flex flex-column align-items-center">
+        <div class="clientes-title mt-3 mb-3">
+            <h1>Listado de Miembros</h1>
+        </div>
+        <table class="table w-50 table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Id Miembro</th>
+              <th scope="col">Id Grupo</th>
+              <th scope="col">Id Cliente</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for miembro in miembros %}
+            <tr>
+              <th scope="row">{{miembro.id}}</th>
+              <td>{{miembro.grupo_id}}</td>
+              <td>{{miembro.cliente_id}}</td>
+              <td class="text-center">
+                  <a href="{% url 'miembro_editar' miembro.id %}"><i class="fas fa-edit fa-2x fa-2x"></i></a>
+                  <a href="{% url 'miembro_eliminar' miembro.id %}"><i class="fas fa-trash-alt fa-2x ml-2"></i>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'base/base.html' %}
+
+{%  block content %}
+    <div class="d-flex flex-column">
+        <div class="title mt-3 mb-3 text-center">
+            <h1>Listado de Cuentas</h1>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+            {% for grupo in groups.grupos %}
+            <table class="table w-50">
+                <thead>
+                <tr class="bg-primary text-white">
+                    <th scope="col">Grupo Id</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{grupo.grupo_id}}</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td colspan="3">Cuentas asociadas: </td>
+                </tr>
+                {% for cuenta in grupo.cuentas %}
+                <tr style="border-style: hidden;">
+                    <td></td>
+                    <td></td>
+                    <th scope="row">{{cuenta.id}}</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td style="width: 550px;">
+                        <!-- Acordeón Calendario pagos -->
+                        <div class="accordion" id="accordion-{{cuenta.id}}">
+                          <div class="card">
+                            <div class="card-header" id="headingOne">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-{{cuenta.id}}" aria-expanded="true" aria-controls="collapse-{{cuenta.id}}">
+                                  Calendario de Pagos
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapse-{{cuenta.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion-{{cuenta.id}}">
+                              <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No. pago</th>
+                                            <th>Monto</th>
+                                            <th>Fecha de pago</th>
+                                            <th>Estatus</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for calendario in cuenta.calendarioPagos %}
+                                        <tr>
+                                            <td>{{calendario.num_pago}}</td>
+                                            <td>{{calendario.monto}}</td>
+                                            <td>{{calendario.fecha_pago}}</td>
+                                            <td>{{calendario.estatus}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin Acordeón Calendario pagos -->
+                    </td>
+                </tr>
+                <tr style="border-style: hidden;">
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <!-- Acordeón pagos a cuenta -->
+                        <div class="accordion" id="accordionPago-{{cuenta.id}}">
+                          <div class="card">
+                            <div class="card-header" id="headingOne">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-pago-{{cuenta.id}}" aria-expanded="true" aria-controls="collapse-pago-{{cuenta.id}}">
+                                  Pagos realizados
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapse-pago-{{cuenta.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionPago-{{cuenta.id}}">
+                              <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha de pago</th>
+                                            <th>Monto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for pago in cuenta.pagos %}
+                                        <tr>
+                                            <td>{{pago.fecha}}</td>
+                                            <td>{{pago.monto}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Fin Acordeón pagos a cuenta -->
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

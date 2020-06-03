@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, get_object_or_404
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework import status
 
 from api.serializers import ClienteSerializer
@@ -10,11 +11,18 @@ from apps.cliente.models import Cliente
 # Create your views here.
 class ClienteListar(generics.ListAPIView):
     serializer_class = ClienteSerializer
-    queryset = Cliente.objects.all()
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'cliente/cliente_listar.html'
+
+    def get(self, request, *args, **kwargs):
+        queryset = Cliente.objects.all()
+        serializer = ClienteSerializer(queryset, many=True)
+        return Response({'clientes': serializer.data})
 
 
 class ClienteCreate(generics.CreateAPIView):
-    queryset = Cliente.objects.all()
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'cliente/cliente_create.html'
     serializer_class = ClienteSerializer
 
     def get(self, request, *args, **kwargs):
@@ -32,16 +40,18 @@ class ClienteCreate(generics.CreateAPIView):
 
 
 class ClienteUpdate(generics.UpdateAPIView):
-    queryset = Cliente.objects.all()
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'cliente/cliente_update.html'
     serializer_class = ClienteSerializer
 
     def get(self, request, id):
+
         cliente = get_object_or_404(Cliente, pk=id)
         serializer = ClienteSerializer(cliente)
-        return Response({'serializer': serializer.data})
+        return Response({'serializer': serializer, 'cliente': cliente})
 
     def post(self, request, id):
-        cliente = get_object_or_404(Cliente, pk=pk)
+        cliente = get_object_or_404(Cliente, pk=id)
         serializer = ClienteSerializer(cliente, data=request.data)
         if not serializer.is_valid():
             return Response({'serializer': serializer, 'cliente': cliente})

@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+
+{%  block content %}
+    <div class="grupo d-flex flex-column align-items-center">
+        <div class="grupo-title mt-3 mb-3">
+            <h1>Crear Grupo</h1>
+        </div>
+        <form action="{% url 'grupo_crear' %}" method="post" class="create">
+    	  {% csrf_token %}
+    	  <div class="form-group">
+    	    <label for="InputNombre">Id</label>
+    	    <input class="form-control" id="exampleInputEmail1" aria-describedby="nombreHelp" name="id">
+    	    <small id="emailHelp" class="form-text">Identificador del grupo.</small>
+    	  </div>
+    	  <div class="form-group">
+    	    <label for="InputDireccion">Nombre</label>
+    	    <input class="form-control" id="exampleInputEmail1" aria-describedby="direccionHelp" name="nombre">
+    	    <small id="emailHelp" class="form-text">Nombre del grupo.</small>
+    	  </div>
+          <a href="{% url 'grupo_listar' %}" class="btn btn-danger btn-lg">Cancelar</a>
+    	  <button type="submit" class="btn btn-primary btn-lg">Crear</button>
+    	</form>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+
+{%  block content %}
+    <div class="clientes d-flex flex-column align-items-center">
+        <div class="clientes-title mt-3 mb-3">
+            <h1>Crear Cliente</h1>
+        </div>
+        <form action="{% url 'cliente_crear' %}" method="post" class="create">
+    	  {% csrf_token %}
+    	  <div class="form-group">
+    	    <label for="InputNombre">Id</label>
+    	    <input class="form-control" id="exampleInputEmail1" aria-describedby="nombreHelp" name="id">
+    	    <small id="emailHelp" class="form-text">Identificador del cliente.</small>
+    	  </div>
+    	  <div class="form-group">
+    	    <label for="InputDireccion">Nombre</label>
+    	    <input class="form-control" id="exampleInputEmail1" aria-describedby="direccionHelp" name="nombre">
+    	    <small id="emailHelp" class="form-text">Nombre del cliente.</small>
+    	  </div>
+          <a href="{% url 'cliente_listar' %}" class="btn btn-danger btn-lg">Cancelar</a>
+    	  <button type="submit" class="btn btn-primary btn-lg">Crear</button>
+    	</form>
+    </div>
+{% endblock %}

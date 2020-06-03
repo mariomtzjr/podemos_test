@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block extracss %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+{% endblock %}
+
+{%  block content %}
+    <div class="transacciones d-flex flex-column align-items-center">
+        <div class="transacciones-title mt-3 mb-3">
+            <h1>Realizar Pago</h1>
+        </div>
+        {% if error %}
+        <div class="alert alert-warning" role="alert">
+          {{error.mensaje}}
+        </div>
+        {% endif %}
+        <form action="{% url 'transaccion_crear' %}" method="post">
+    	  {% csrf_token %}
+    	  <div class="form-group">
+    	    <label for="InputNombre">Id de transacción</label>
+            <input type="number" class="form-control" name="id">
+    	    <small class="form-text">Identificador de la transacción.</small>
+    	  </div>
+    	  <div class="form-group">
+    	    <label for="InputDireccion">Cuenta</label>
+            <select class="form-control" name="cuenta_id">
+              <option>Selecciona una cuenta a pagar</option>
+              {% for cuenta in cuentas %}
+                  <option value="{{cuenta.id}}">{{cuenta.id}}</option>
+              {% endfor %}
+            </select>
+    	    <small id="emailHelp" class="form-text">Identificador de la cuenta.</small>
+    	  </div>
+          <div class="form-group">
+            <label for="datetimepicker1"class="control-label">Fecha</label>
+            <div class='input-group date'>
+                <input type="datetime-local" class="form-control" name="fecha">
+            </div>
+          </div>
+          <div class="form-group">
+    	    <label for="InputNombre">Monto</label>
+            <input type="number" class="form-control" name="monto">
+    	    <small class="form-text">Monto de la transacción.</small>
+    	  </div>
+          <div class="d-flex justify-content-end">
+              <a href="{% url 'miembros_listar' %}" class="btn btn-danger btn-lg">Cancelar</a>
+              <button type="submit" class="btn btn-primary btn-lg ml-3">Crear</button>
+          </div>
+    	</form>
+    </div>
+{% endblock %}

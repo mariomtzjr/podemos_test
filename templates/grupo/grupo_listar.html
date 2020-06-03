@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{%  block content %}
+    <div class="clientes d-flex flex-column align-items-center">
+        <div class="clientes-title mt-3 mb-3">
+            <h1>Listado de Grupos</h1>
+        </div>
+        <table class="table w-50 table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Id Grupo</th>
+              <th scope="col">Nombre de Grupo</th>
+              <th scope="col">Miembros</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for grupo in grupos %}
+            <tr>
+              <th scope="row">{{grupo.id}}</th>
+              <td>{{grupo.nombre}}</td>
+              <td>
+                <ul>
+                    {% for miembro in grupo.miembros %}
+                        <li>{{miembro.cliente.id}} - {{miembro.cliente.nombre}}</li>
+                    {% endfor %}
+                </ul>
+              </td>
+              <td class="text-center"><a href="{% url 'grupo_eliminar' grupo.id %}"><i class="fas fa-trash-alt fa-2x"></i></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+{% endblock %}

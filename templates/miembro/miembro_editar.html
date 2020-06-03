@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+<div class="form-editar d-flex flex-column align-items-center">
+    <div class="miembros-title mt-3 mb-3">
+        <h1>Editar registro de miembros</h1>
+        <h5 class="text-center">Reasignación de clientes a grupos</h5>
+    </div>
+    <div class="note mt-3 mb-3">
+        <h4>
+            Actualmente el cliente "{{miembro.cliente_id}}" se encuentra en el grupo "{{miembro.grupo_id}}"
+        </h4>
+    </div>
+	<form action="{% url 'miembro_editar' miembro.id %}" method="POST" class="w-50">
+	    {% csrf_token %}
+	    {% render_form serializer %}
+		<div class="form-group">
+	        <div class="d-flex justify-content-end ">
+                <a href="{% url 'miembros_listar' %}" class="btn btn-danger btn-lg">Cancelar</a>
+	            <button type="submit" class="btn btn-primary btn-lg ml-3">Guardar</button>
+	        </div>
+	    </div>
+	</form>
+</div>
+
+{% endblock %}
